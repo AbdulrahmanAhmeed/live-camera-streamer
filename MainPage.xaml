@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="IpCamera.MainPage"
+             Title="IP Camera Viewer">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Frame Grid.Row="0" Margin="10" Padding="15">
+            <VerticalStackLayout Spacing="10">
+                <Label Text="Ontario Traffic Camera Viewer" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center" />
+                
+                <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="10">
+                    <Entry x:Name="IpAddressEntry" 
+                           Placeholder="Enter Camera URL (HTTP or RTSP)"
+                           Text="http://192.82.150.11:8083/mjpg/video.mjpg"
+                           Grid.Column="0" />
+                    
+                    <Button x:Name="PresetButton" 
+                            Text="Traffic Cam" 
+                            Clicked="OnPresetClicked"
+                            Grid.Column="1" />
+                    
+                    <Button x:Name="ConnectButton" 
+                            Text="Connect" 
+                            Clicked="OnConnectClicked"
+                            Grid.Column="2" />
+                    
+                    <Button x:Name="DisconnectButton" 
+                            Text="Disconnect" 
+                            Clicked="OnDisconnectClicked"
+                            IsEnabled="False"
+                            Grid.Column="3" />
+                </Grid>
+                
+                <Label x:Name="StatusLabel" 
+                       Text="Enter IP camera URL and click Connect" 
+                       FontSize="12" />
+                
+                <Grid ColumnDefinitions="*,*,*" ColumnSpacing="10" IsVisible="False" x:Name="VlcButtonGrid">
+                    <Button x:Name="OpenInVlcButton" 
+                            Text="Open in VLC" 
+                            Clicked="OnOpenInVlcClicked"
+                            Grid.Column="0"
+                            BackgroundColor="Orange" />
+                    <Button x:Name="DownloadVlcButton" 
+                            Text="Download VLC" 
+                            Clicked="OnDownloadVlcClicked"
+                            Grid.Column="1"
+                            BackgroundColor="Green" />
+                    <Button x:Name="TestInBrowserButton" 
+                            Text="Test in Browser" 
+                            Clicked="OnTestInBrowserClicked"
+                            Grid.Column="2"
+                            BackgroundColor="Blue" />
+                </Grid>
+            </VerticalStackLayout>
+        </Frame>
+
+        <Frame Grid.Row="1" Margin="10" Padding="5" BackgroundColor="Black">
+            <Grid>
+                <WebView x:Name="VideoWebView" IsVisible="False" />
+                <!-- MediaElement not available in .NET MAUI, using WebView for all streams -->
+                <Image x:Name="VideoImage" Aspect="AspectFit" IsVisible="False" />
+                <Label x:Name="NoVideoLabel" 
+                       Text="No video stream" 
+                       TextColor="White" 
+                       FontSize="16" 
+                       HorizontalOptions="Center" 
+                       VerticalOptions="Center" />
+            </Grid>
+        </Frame>
+    </Grid>
+
+</ContentPage>
