@@ -61,19 +61,50 @@
             </VerticalStackLayout>
         </Frame>
 
-        <Frame Grid.Row="1" Margin="10" Padding="5" BackgroundColor="Black">
-            <Grid>
-                <WebView x:Name="VideoWebView" IsVisible="False" />
-                <!-- MediaElement not available in .NET MAUI, using WebView for all streams -->
-                <Image x:Name="VideoImage" Aspect="AspectFit" IsVisible="False" />
-                <Label x:Name="NoVideoLabel" 
-                       Text="No video stream" 
-                       TextColor="White" 
-                       FontSize="16" 
-                       HorizontalOptions="Center" 
-                       VerticalOptions="Center" />
-            </Grid>
-        </Frame>
+        <Grid Grid.Row="1" Margin="10" ColumnDefinitions="2*,1*" ColumnSpacing="10">
+            <!-- Video Section -->
+            <Frame Grid.Column="0" Padding="5" BackgroundColor="Black">
+                <Grid>
+                    <WebView x:Name="VideoWebView" IsVisible="False" />
+                    <Image x:Name="VideoImage" Aspect="AspectFit" IsVisible="False" />
+                    <Label x:Name="NoVideoLabel" 
+                           Text="No video stream" 
+                           TextColor="White" 
+                           FontSize="16" 
+                           HorizontalOptions="Center" 
+                           VerticalOptions="Center" />
+                </Grid>
+            </Frame>
+
+            <!-- Movement Log Section -->
+            <Frame Grid.Column="1" Padding="10" BackgroundColor="#1a1a1a">
+                <VerticalStackLayout Spacing="5">
+                    <Label Text="Movement Detection Log" 
+                           FontSize="14" 
+                           FontAttributes="Bold" 
+                           TextColor="White" />
+                    
+                    <ScrollView x:Name="LogScrollView" 
+                                VerticalOptions="FillAndExpand" 
+                                Orientation="Vertical">
+                        <Label x:Name="LogLabel" 
+                               Text="" 
+                               TextColor="#00ff00" 
+                               FontSize="11" 
+                               FontFamily="Courier New" 
+                               VerticalOptions="Start"
+                               Padding="5" />
+                    </ScrollView>
+                    
+                    <Button x:Name="ClearLogButton" 
+                            Text="Clear Log" 
+                            Clicked="OnClearLogClicked"
+                            BackgroundColor="#444"
+                            TextColor="White"
+                            CornerRadius="5" />
+                </VerticalStackLayout>
+            </Frame>
+        </Grid>
     </Grid>
 
 </ContentPage>

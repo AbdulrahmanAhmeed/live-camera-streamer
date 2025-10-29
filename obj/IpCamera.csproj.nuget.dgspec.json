@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\ActiveProjs\\IpCamera\\IpCamera\\IpCamera.csproj": {}
+    "D:\\ActiveProjs\\live-camera-streamer\\live-camera-streamer\\IpCamera.csproj": {}
   },
   "projects": {
-    "D:\\ActiveProjs\\IpCamera\\IpCamera\\IpCamera.csproj": {
+    "D:\\ActiveProjs\\live-camera-streamer\\live-camera-streamer\\IpCamera.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\ActiveProjs\\IpCamera\\IpCamera\\IpCamera.csproj",
+        "projectUniqueName": "D:\\ActiveProjs\\live-camera-streamer\\live-camera-streamer\\IpCamera.csproj",
         "projectName": "IpCamera",
-        "projectPath": "D:\\ActiveProjs\\IpCamera\\IpCamera\\IpCamera.csproj",
+        "projectPath": "D:\\ActiveProjs\\live-camera-streamer\\live-camera-streamer\\IpCamera.csproj",
         "packagesPath": "C:\\Users\\Abdulrahman\\.nuget\\packages\\",
-        "outputPath": "D:\\ActiveProjs\\IpCamera\\IpCamera\\obj\\",
+        "outputPath": "D:\\ActiveProjs\\live-camera-streamer\\live-camera-streamer\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [
