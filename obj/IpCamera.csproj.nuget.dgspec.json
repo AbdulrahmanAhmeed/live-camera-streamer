@@ -75,6 +75,14 @@
               "target": "Package",
               "version": "[1.5.240802000, )"
             },
+            "SkiaSharp": {
+              "target": "Package",
+              "version": "[2.88.8, )"
+            },
+            "SkiaSharp.Views.Maui.Controls": {
+              "target": "Package",
+              "version": "[2.88.8, )"
+            },
             "System.Net.Http": {
               "target": "Package",
               "version": "[4.3.4, )"

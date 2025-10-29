@@ -17,7 +17,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("IpCamera")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+c84090b5d48739bfa0422d7a16075e5c03a871f5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+8020a5fa74b48949efab3f9e0f1ea324a1b2dda8")]
 [assembly: System.Reflection.AssemblyProductAttribute("IpCamera")]
 [assembly: System.Reflection.AssemblyTitleAttribute("IpCamera")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

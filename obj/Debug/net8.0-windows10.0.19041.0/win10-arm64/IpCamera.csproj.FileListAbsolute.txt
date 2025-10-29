@@ -404,3 +404,8 @@ D:\ActiveProjs\IpCamera\IpCamera\obj\Debug\net8.0-windows10.0.19041.0\win10-arm6
 D:\ActiveProjs\IpCamera\IpCamera\obj\Debug\net8.0-windows10.0.19041.0\win10-arm64\qualifiers.txt.intermediate
 D:\ActiveProjs\IpCamera\IpCamera\obj\Debug\net8.0-windows10.0.19041.0\win10-arm64\MultipleQualifiersPerDimensionFound.txt
 D:\ActiveProjs\IpCamera\IpCamera\obj\Debug\net8.0-windows10.0.19041.0\win10-arm64\ProjectArchitectures.txt
+D:\ActiveProjs\IpCamera\IpCamera\bin\Debug\net8.0-windows10.0.19041.0\win10-arm64\SkiaSharp.dll
+D:\ActiveProjs\IpCamera\IpCamera\bin\Debug\net8.0-windows10.0.19041.0\win10-arm64\SkiaSharp.Views.Maui.Controls.dll
+D:\ActiveProjs\IpCamera\IpCamera\bin\Debug\net8.0-windows10.0.19041.0\win10-arm64\SkiaSharp.Views.Maui.Core.dll
+D:\ActiveProjs\IpCamera\IpCamera\bin\Debug\net8.0-windows10.0.19041.0\win10-arm64\SkiaSharp.Views.Windows.dll
+D:\ActiveProjs\IpCamera\IpCamera\bin\Debug\net8.0-windows10.0.19041.0\win10-arm64\libSkiaSharp.dll

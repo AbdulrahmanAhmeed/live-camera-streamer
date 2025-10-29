@@ -1,6 +1,8 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using System.Linq;
+using IpCamera.Services;
+using SkiaSharp;
 
 namespace IpCamera
 {
@@ -12,6 +14,7 @@ namespace IpCamera
         private string _logContent = "";
         private System.Threading.Timer? _movementCheckTimer;
         private bool _webViewReady = false;
+		private MjpegStreamer? _mjpegStreamer;
 
         public MainPage()
         {
@@ -181,10 +184,17 @@ namespace IpCamera
                     var contentType = response.Content.Headers.ContentType?.MediaType ?? "unknown";
                     StatusLabel.Text = $"Step 3: Response received! Status: {response.StatusCode}, Type: {contentType}";
 
-                    if (response.IsSuccessStatusCode)
+					if (response.IsSuccessStatusCode)
                     {
-                        StatusLabel.Text = "Step 4: Loading stream in viewer...";
-                        await LoadStreamInWebView(url);
+						StatusLabel.Text = "Step 4: Loading stream...";
+						if (contentType.Contains("multipart/x-mixed-replace") || url.Contains(".mjpg", StringComparison.OrdinalIgnoreCase) || url.Contains("/mjpeg", StringComparison.OrdinalIgnoreCase))
+						{
+							StartNativeMjpeg(url);
+						}
+						else
+						{
+							await LoadStreamInWebView(url);
+						}
 
                         _isConnected = true;
                         ConnectButton.IsEnabled = false;
@@ -226,7 +236,7 @@ namespace IpCamera
             }
         }
 
-        private void ShowConnectionError(string url, string errorMessage)
+		private void ShowConnectionError(string url, string errorMessage)
         {
             try
             {
@@ -307,10 +317,72 @@ namespace IpCamera
                 </html>";
 
                 VideoWebView.Source = new HtmlWebViewSource { Html = htmlContent };
-            }
+        }
             catch (Exception ex)
             {
                 StatusLabel.Text = $"Error showing diagnostics: {ex.Message}";
+            }
+        }
+
+        private void StartNativeMjpeg(string url)
+        {
+            try
+            {
+                // Stop any existing session
+                _mjpegStreamer?.DisposeAsync().AsTask().ConfigureAwait(false);
+
+                VideoWebView.IsVisible = false;
+                VideoImage.IsVisible = true;
+                NoVideoLabel.IsVisible = false;
+                VlcButtonGrid.IsVisible = true;
+
+				// Tune sensitivity: lower thresholds -> more sensitive
+				_mjpegStreamer = new MjpegStreamer(
+					new HttpClient { Timeout = TimeSpan.FromSeconds(60) },
+					downscaleWidth: 128,
+					downscaleHeight: 96,
+					differenceThresholdRatio: 0.003f, // 0.3% pixels changed
+					perChannelThreshold: 10,
+					cooldownMs: 1000);
+                _mjpegStreamer.FrameReceived += bytes =>
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        try
+                        {
+                            VideoImage.Source = ImageSource.FromStream(() => new MemoryStream(bytes));
+                        }
+                        catch { }
+                    });
+                };
+                _mjpegStreamer.MotionDetected += () =>
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        AppendToLog("Movement detected (native)");
+                        StatusLabel.Text = "🚨 MOVEMENT (native)";
+                    });
+                };
+				_mjpegStreamer.Metrics += (ratio, changed, total) =>
+				{
+					MainThread.BeginInvokeOnMainThread(() =>
+					{
+						StatusLabel.Text = $"Monitoring... change={ratio:P2} ({changed}/{total})";
+					});
+				};
+                _mjpegStreamer.Error += msg =>
+                {
+                    MainThread.BeginInvokeOnMainThread(() =>
+                    {
+                        StatusLabel.Text = $"Stream error: {msg}";
+                    });
+                };
+
+                _mjpegStreamer.Start(url);
+            }
+            catch (Exception ex)
+            {
+                StatusLabel.Text = $"Failed to start native stream: {ex.Message}";
             }
         }
 
@@ -932,6 +1004,7 @@ namespace IpCamera
         private void Disconnect()
         {
             _cancellationTokenSource?.Cancel();
+			_mjpegStreamer?.DisposeAsync().AsTask().ConfigureAwait(false);
             _movementCheckTimer?.Dispose();
             _movementCheckTimer = null;
             _isConnected = false;
